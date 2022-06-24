@@ -72,7 +72,7 @@ def get_problems(form):
         SELECT DISTINCT n.problem_id AS problem_id, n.similarity AS similarity
         FROM (candidates NATURAL JOIN tag NATURAL JOIN difficulty) AS n
         WHERE ((n.tag IN ({tag})) AND (n.difficulty IN ({difficulty})))
-        ORDER BY n.similarity DESC;
+        ORDER BY n.similarity ASC;
         ''').fetchall()
 
     middle = int(len(problem_list) / 100 * similarity)
