@@ -95,7 +95,7 @@ def get_problems(form):
 
 class RegForm(FlaskForm):
     username = StringField('Username', validators=[
-                           DataRequired(), Regexp('^([0-9a-zA-Z\._\-]*)$', message='Please enter a valid username.')])
+                           DataRequired(), Regexp('^([0-9a-zA-Z_\-]*)$', message='Please enter a valid username.')])
     tag = SelectField('Tag', choices=choices.tags)
     difficulty = SelectField('Difficulty',
                              choices=choices.difficulties)
