@@ -130,3 +130,5 @@ dmypy.json
 
 rds_config.py
 queries.sql
+demo/
+*.zip
