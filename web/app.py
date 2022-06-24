@@ -45,13 +45,13 @@ def get_problems(form):
         placeholders = ', '.join(recent_ac)
         db.engine.execute(f'''
         DROP TABLE IF EXISTS solved_problems;
-        CREATE TABLE solved_problems AS
+        CREATE TEMP TABLE solved_problems AS
         (SELECT problem_id FROM problem
         WHERE problem_name_slug in ({placeholders}));
         ''')
         db.engine.execute(f'''
         DROP TABLE IF EXISTS candidates;
-        CREATE TABLE candidates AS
+        CREATE TEMP TABLE candidates AS
         (SELECT s.problem_id_a AS problem_id, MAX(s.similarity) AS similarity
         FROM Similarity AS s
         WHERE s.problem_id_b IN (SELECT * FROM solved_problems)
@@ -61,7 +61,7 @@ def get_problems(form):
     else:
         db.engine.execute(f'''
         DROP TABLE IF EXISTS candidates;
-        CREATE TABLE candidates AS
+        CREATE TEMP TABLE candidates AS
         (SELECT problem_id, RANDOM() AS similarity
         FROM problem);
         ''')
@@ -95,7 +95,7 @@ def get_problems(form):
 
 class RegForm(FlaskForm):
     username = StringField('Username', validators=[
-                           DataRequired(), Regexp('^([0-9a-zA-Z\._\-]*)$', message='Please input a valid username.')])
+                           DataRequired(), Regexp('^([0-9a-zA-Z\._\-]*)$', message='Please enter a valid username.')])
     tag = SelectField('Tag', choices=choices.tags)
     difficulty = SelectField('Difficulty',
                              choices=choices.difficulties)
